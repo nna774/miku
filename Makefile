@@ -7,9 +7,19 @@ zeros:
 with_signature:
 	echo -n -e '\x55\xaa' | dd of=mbr_signature.bin bs=1 seek=510 conv=notrunc
 
-hello:
-	as -o hello.o hello.S
-	ld --oformat binary -Ttext=7c00 -Tdata=7dfe -o hello.bin hello.o
+hello: hello.bin
+	: nop
+
+video-dark: video-dark.bin
+	: nop
+
+.SUFFIXES: .o .S .bin
+
+.S.o:
+	as -o $@ $<
+
+.o.bin:
+	ld --oformat binary -Ttext=7c00 -Tdata=7dfe -o $@ $<
 
 .PHONY: clean
 clean:
