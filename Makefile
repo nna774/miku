@@ -9,4 +9,4 @@ with_signature:
 
 .PHONY: clean
 clean:
-	${RM} *.bin
+	${RM} *.bin *.o
